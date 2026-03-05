@@ -30,24 +30,28 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
 
-const path = require("path")
+const path = require("path");
 
-// ===== API TEST ROUTE =====
+// ---- ROTAS DA API (todas sob /api) ----
 app.get("/api", (req, res) => {
-  res.json({ status: "API running" })
-})
+  res.json({ status: "API running" });
+});
 
-// ===== SERVIR FRONTEND =====
-const frontendPath = path.resolve(__dirname, "../frontend/dist")
+// ...suas outras rotas /api (events, gifts, rsvp) aqui...
 
-app.use(express.static(frontendPath))
+// ---- SERVIR O FRONTEND (VUE) ----
+const frontendPath = path.resolve(__dirname, "../frontend/dist");
 
-// rota principal do site
+// arquivos estáticos do build
+app.use(express.static(frontendPath));
+
+// raiz do site
 app.get("/", (req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"))
-})
+  res.sendFile(path.join(frontendPath, "index.html"));
+});
 
-// fallback para SPA
-app.use((req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"))
-})
+// fallback para SPA (qualquer rota que não seja /api)
+app.use((req, res, next) => {
+  if (req.path.startsWith("/api")) return next();
+  res.sendFile(path.join(frontendPath, "index.html"));
+});
