@@ -32,10 +32,22 @@ app.listen(PORT, () => {
 
 const path = require("path")
 
+// ===== API TEST ROUTE =====
+app.get("/api", (req, res) => {
+  res.json({ status: "API running" })
+})
+
+// ===== SERVIR FRONTEND =====
 const frontendPath = path.resolve(__dirname, "../frontend/dist")
 
 app.use(express.static(frontendPath))
 
+// rota principal do site
 app.get("/", (req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"))
+})
+
+// fallback para SPA
+app.use((req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"))
 })
