@@ -32,10 +32,13 @@ app.listen(PORT, () => {
 
 const path = require("path")
 
-const frontendPath = path.join(__dirname, "../frontend/dist")
+// caminho absoluto para o build do Vue
+const frontendPath = path.resolve(__dirname, "../frontend/dist")
 
+// servir arquivos estáticos
 app.use(express.static(frontendPath))
 
+// rota principal
 app.get("/", (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"))
 })
