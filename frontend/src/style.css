@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+body {
+  font-family: 'Playfair Display', serif;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1.5s ease;
+  -webkit-transition: all 1.5s ease;
+  -moz-transition: all 1.5s ease;
+  -ms-transition: all 1.5s ease;
+  -o-transition: all 1.5s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-parallax {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
